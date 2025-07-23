@@ -1,0 +1,56 @@
+name: deploy-sandbox-vpc
+
+on:
+  workflow_dispatch:
+    inputs:
+      terraform-action:
+        description: 'Terraform action: plan | apply | destroy'
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+        - plan
+        - apply
+        - destroy
+      target-directory:
+        description: 'Module path (s3-remote-state-module or vpc-sandbox-module)'
+        required: true
+        default: 's3-remote-state-module'
+        type: choice
+        options:
+        - s3-remote-state-module
+        - vpc-sandbox-module
+
+jobs:
+  run-terraform:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.2
+
+      - name: List contents
+        run: ls -la
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ github.event.inputs.target-directory }}
+
+      - name: Terraform Plan
+        if: ${{ github.event.inputs.terraform-action == 'plan' }}
+        run: terraform plan
+        working-directory: ${{ github.event.inputs.target-directory }}
+
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.terraform-action == 'apply' }}
+        run: terraform apply -auto-approve
+        working-directory: ${{ github.event.inputs.target-directory }}
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.terraform-action == 'destroy' }}
+        run: terraform destroy -auto-approve
+        working-directory: ${{ github.event.inputs.target-directory }}
