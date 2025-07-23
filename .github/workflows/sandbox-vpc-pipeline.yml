@@ -1,6 +1,9 @@
 name: deploy-sandbox-vpc
 
 on:
+  schedule:
+    - cron: '15 12 * *'
+    
   workflow_dispatch:
     inputs:
       terraform-action:
