@@ -1,8 +1,8 @@
 name: deploy-sandbox-vpc
 
 on:
-  schedule:
-    - cron: '17 12 * * *'
+  push:
+    [vpc-sandbox-test]
 
   workflow_dispatch:
     inputs:
