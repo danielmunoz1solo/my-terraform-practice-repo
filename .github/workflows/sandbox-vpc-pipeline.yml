@@ -1,10 +1,6 @@
 name: deploy-sandbox-vpc
 
 on:
-  push:
-    branches:
-      [vpc-sandbox-test]
-
   workflow_dispatch:
     inputs:
       terraform-action:
