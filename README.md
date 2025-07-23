@@ -1,40 +1,39 @@
-# Terraform GitHub Repository Automation
+## Option 1 - Run manually on Terraform EC2 instance
+1. Initialize Terraform
 
-This project uses Terraform to create and configure a GitHub repository by provisioining admin access through a github personal access token.
+   - From root directory:
+```
+   terraform init
+```
+2. Create EC2 Runner
+```
+   terraform apply
+```
+   - After the EC2 instance is created, copy your VPC Terraform files to the EC2 using scp using your kp:
+```
+   scp -i path/to/key.pem -r ./vpc-sandbox-module ec2-user@<public-ip>:/home/ec2-user/
+```
 
-## Setup
+3. SSH into the EC2 Runner
+```
+   ssh -i path/to/key.pem ec2-user@<public-ip>
+```
+4. Run the VPC Terraform Module from EC2
+```
+   cd ~/vpc-module
+   terraform init
+   terraform apply
+```
+5. VPC sandbox up and running (current basic implementation only, no internet access yet) 
 
-1. **Install Terraform**
+##### TODO: Add on IGW (and NGW) depending on use case, add route tables and sg as well
 
-   [Download Terraform](https://developer.hashicorp.com/terraform/install#linux)
+##### TODO: Automate script using github actions workflow, no need for EC2 instance
 
-2. **Export your GitHub token**
+##### TODO: Clean up variable usage, cleaner modular setup
 
-   ``` bash
-   export TF_VAR_github_token=ghp_your_personal_access_token
-   ```
+##### Any other recommendations?
 
-3. **Change Variables**
-    - Feel free to change values of any variables in the terraform.tfvars:
-    ```
-    repo_name        = "my-terraform-practice-repo"
-    repo_description = "This repo was created by Terraform and Daniel Munoz :)"
-    repo_visibility  = "public"
-    has_issues       = false
-    has_wiki         = false
-    auto_init        = true
 
-3. **Terraform Commands**
 
-    ```
-    terraform init
-    ```
-
-    ```
-    terraform plan
-    ```
-    ```
-    terraform apply
-    ```
-
-#### Thanks for reading :)
+## Option 2 - Run using Github Workflows
