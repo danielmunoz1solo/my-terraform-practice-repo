@@ -1,0 +1,6 @@
+repo_name        = <REPO_NAME>
+repo_description = <YOUR_REPO_DESCRIPTION>
+repo_visibility  = <PUBLIC/PRIVATE>
+has_issues       = <T/F>
+has_wiki         = <T/F>
+auto_init        = <T/F>
