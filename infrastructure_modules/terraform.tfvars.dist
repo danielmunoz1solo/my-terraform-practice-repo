@@ -1,0 +1,16 @@
+# aws provider
+region = <AWS_REGION>
+
+# lambda 
+lambda_name = <YOUR_LAMBDA_RUNNER_NAME>
+application_language = <YOUR_CHOSEN_APP_LANGUAGE>
+timeout = <MAX_TIME_FOR_LAMBDA_RUNNER>
+
+# cloudwatch/eventbridge
+event_name = <NAME_OF_YOUR_CLOUDWATCH_EVENT>
+cron = <YOUR_CHOSEN_CRON_TIMES_FOR_CLOUDWATCH_EVENT>
+event_action = <YOUR_CHOSEN_EVENT_BRIDGE_ACTION>
+statement_id = <YOUR_CHOSEN_EVENT_BRIDGE_STATEMENT>
+
+
+
